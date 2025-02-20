@@ -1,5 +1,7 @@
 # Docker and k8s
 
+We deploy the k8s cluster and use grafana to get prometheus metrics from the pods
+
 ## Install dependencies and start
 
 ```bash
@@ -30,10 +32,10 @@ helm create nestjs-metrics
 
 ### 3 - Create deployment template for the app
 
-cd to `./nestjs-metrics/templates`
+cd to `./nestjs-metrics`
 
 ```bash
-kubectl create deployment nestjs-metrics --image=fabodhub/nestjs-metrics:latest --port 3000 --dry-run=client -o yaml > deployment.yaml
+kubectl create deployment nestjs-metrics --image=fabodhub/nestjs-metrics:latest --port 3000 --dry-run=client -o yaml > template/deployment.yaml
 ```
 
 ### 4 - Pull prometheus and grafana
@@ -55,14 +57,15 @@ minikube status
 helm install nestjs-metrics .
 ```
 
-## Dasboard - Check
+## Dasboard
+
+Check
 
 ```bash
 kubectl get pods
 ```
 
 get pod name `nestjs-metrics-*` and check logs `kubectl logs POD_NAME`
-
 
 ```bash
 kubectl get services
