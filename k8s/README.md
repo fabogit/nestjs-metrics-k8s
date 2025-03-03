@@ -71,7 +71,11 @@ get pod name `nestjs-metrics-*` and check logs `kubectl logs POD_NAME`
 kubectl get services
 ```
 
-get port for pod `nestjs-metrics-grafana` go to localhost:port/login for grafana dashboard
+get port for pod `nestjs-metrics-grafana` , output should be like:
+
+`nestjs-metrics-grafana                    NodePort    10.98.197.78     <none>        80:REAL_PORT_NUMBER/TCP`
+
+in the browser go to `HOST`:`REAL_PORT_NUMBER` for grafana dashboard, where `HOST` is the ip given by `minikube ip`
 
 default user: `admin` to get password run:
 
@@ -79,6 +83,6 @@ default user: `admin` to get password run:
 kubectl get secret nestjs-metrics-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
-in settings add prometheus as datasource URL: `http://nestjs-metrics-prometheus-server:80`
+in settings (`/connections/datasources/`) add prometheus as new datasource, set Connection URL to: `http://nestjs-metrics-prometheus-server:80`
 
-to apply dashboard templates [node](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) import dashboard id `1860`
+to apply dashboard templates [node](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) import dashboard id `1860` and add prometheus as datasource
